@@ -1,0 +1,99 @@
+- hosts: bbb
+  tasks:
+    - name: install python dependencies
+      package:
+        name: python-lxml
+        state: present
+    - name: download bbb-install script
+      get_url: 
+        url: https://ubuntu.bigbluebutton.org/bbb-install.sh 
+        dest: ~/bbb-install.sh
+    - name: disable recordings and logging
+      lineinfile: 
+        path: /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
+        line: '{{item.key}}={{item.value}}'
+        regexp: '^(\s+)?{{item.key}}='
+      loop:
+        - { key: disableRecordingDefault, value: 'true' }
+        - { key: breakoutRoomsRecord, value: 'false' }
+        - { key: appLogLevel, value: Error }
+    - name: logfile retention
+      lineinfile:
+        path: /etc/cron.daily/bigbluebutton
+        line: '{{item.key}}={{item.value}}'
+        regexp: '^(\s+)?{{item.key}}='
+      loop: 
+        - { key: history, value: 2 }
+        - { key: unrecorded_days, value: 2 }
+        - { key: published_days, value: 2 }
+        - { key: log_history, value: 5 }
+    - name: logging in /usr/share/bbb-web/WEB-INF/classes/logback.xml
+      xml:  
+        path: /usr/share/bbb-web/WEB-INF/classes/logback.xml
+        xpath: '{{item}}'
+        attribute: level
+        value: ERROR
+      loop:
+        - /configuration/logger
+        - /configuration/root
+    - name: logging etc/nginx/sites-available/bigbluebutton
+      lineinfile:
+        path: '{{ item }}'
+        line: '\1access_log off;'
+        regexp: '^((\s+)?)access_log '
+        backrefs: yes
+      loop:
+        - /etc/nginx/nginx.conf
+        - /etc/nginx/sites-available/bigbluebutton
+    - name: reduce logging akka .xml
+      xml:
+        path: '{{ item[0] }}'
+        xpath: '{{ item[1] }}'
+        attribute: level
+        value: ERROR
+      vars: 
+        files: 
+          - /etc/bbb-transcode-akka/logback.xml
+          - /etc/bbb-apps-akka/logback.xml
+          - /etc/bbb-fsesl-akka/logback.xml
+          - /etc/red5/logback.xml
+        xpaths:
+          - /configuration/logger
+          - /configuration/root
+      loop: '{{ files | product(xpaths) | list }}'
+    - name: reduce logging akka .xml 2
+      xml:
+        path: '{{ item[0] }}'
+        xpath: '{{ item[1] }}'
+        state: absent
+      vars:
+        files:
+          - /etc/bbb-transcode-akka/logback.xml
+          - /etc/bbb-apps-akka/logback.xml
+          - /etc/bbb-fsesl-akka/logback.xml
+          - /etc/red5/logback.xml
+        xpaths:
+          - /configuration/logger/level
+          - /configuration/root/level
+      loop: '{{ files | product(xpaths) | list }}' 
+    - name: reduce logging akka .conf
+      lineinfile: 
+        path: '{{ item }}'
+        line: '\1loglevel = ERROR'
+        regexp: '^((\s+)?)loglevel = '
+        backrefs: yes
+      loop:
+        - /etc/bbb-transcode-akka/application.conf
+        - /etc/bbb-apps-akka/application.conf
+        - /etc/bbb-fsesl-akka/application.conf
+    - name: reduce logging akka 3
+      lineinfile:
+        path: '{{ item }}'
+        line: '\1stdout-loglevel = ERROR'
+        regexp: '^((\s+)?)stdout-loglevel = '
+        backrefs: yes
+      loop:
+        - /etc/bbb-transcode-akka/application.conf
+        - /etc/bbb-apps-akka/application.conf
+        - /etc/bbb-fsesl-akka/application.conf
+
