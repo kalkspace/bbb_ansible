@@ -5,11 +5,13 @@
         name: python-lxml
         state: present
     - name: download bbb-install script
-      get_url: 
-        url: https://ubuntu.bigbluebutton.org/bbb-install.sh 
+      get_url:
+        url: https://ubuntu.bigbluebutton.org/bbb-install.sh
         dest: ~/bbb-install.sh
+# es fehlt der Abschnitt "TURN-Settings anpassen" aus unserer Doku
+# hier nun "Anpassungen für Datensparsamkeit"
     - name: disable recordings and logging
-      lineinfile: 
+      lineinfile:
         path: /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
         line: '{{item.key}}={{item.value}}'
         regexp: '^(\s+)?{{item.key}}='
@@ -22,13 +24,13 @@
         path: /etc/cron.daily/bigbluebutton
         line: '{{item.key}}={{item.value}}'
         regexp: '^(\s+)?{{item.key}}='
-      loop: 
+      loop:
         - { key: history, value: 2 }
         - { key: unrecorded_days, value: 2 }
         - { key: published_days, value: 2 }
         - { key: log_history, value: 5 }
     - name: logging in /usr/share/bbb-web/WEB-INF/classes/logback.xml
-      xml:  
+      xml:
         path: /usr/share/bbb-web/WEB-INF/classes/logback.xml
         xpath: '{{item}}'
         attribute: level
@@ -36,7 +38,7 @@
       loop:
         - /configuration/logger
         - /configuration/root
-    - name: logging etc/nginx/sites-available/bigbluebutton
+    - name: logging etc/nginx/sites-available/bigbluebutton and etc/nginx/nginx.conf
       lineinfile:
         path: '{{ item }}'
         line: '\1access_log off;'
@@ -45,14 +47,14 @@
       loop:
         - /etc/nginx/nginx.conf
         - /etc/nginx/sites-available/bigbluebutton
-    - name: reduce logging akka .xml
+    - name: reduce logging etc/bbb-*-akka|red5 logback.xml (1)
       xml:
         path: '{{ item[0] }}'
         xpath: '{{ item[1] }}'
         attribute: level
         value: ERROR
-      vars: 
-        files: 
+      vars:
+        files:
           - /etc/bbb-transcode-akka/logback.xml
           - /etc/bbb-apps-akka/logback.xml
           - /etc/bbb-fsesl-akka/logback.xml
@@ -61,7 +63,7 @@
           - /configuration/logger
           - /configuration/root
       loop: '{{ files | product(xpaths) | list }}'
-    - name: reduce logging akka .xml 2
+    - name: reduce logging etc/bbb-*-akka|red5 logback.xml (2)
       xml:
         path: '{{ item[0] }}'
         xpath: '{{ item[1] }}'
@@ -75,9 +77,9 @@
         xpaths:
           - /configuration/logger/level
           - /configuration/root/level
-      loop: '{{ files | product(xpaths) | list }}' 
-    - name: reduce logging akka .conf
-      lineinfile: 
+      loop: '{{ files | product(xpaths) | list }}'
+    - name: reduce logging */application.conf (1)
+      lineinfile:
         path: '{{ item }}'
         line: '\1loglevel = ERROR'
         regexp: '^((\s+)?)loglevel = '
@@ -86,7 +88,8 @@
         - /etc/bbb-transcode-akka/application.conf
         - /etc/bbb-apps-akka/application.conf
         - /etc/bbb-fsesl-akka/application.conf
-    - name: reduce logging akka 3
+        - /usr/share/bbb-web/WEB-INF/classes/application.conf
+    - name: reduce logging */application.conf (2)
       lineinfile:
         path: '{{ item }}'
         line: '\1stdout-loglevel = ERROR'
@@ -96,4 +99,39 @@
         - /etc/bbb-transcode-akka/application.conf
         - /etc/bbb-apps-akka/application.conf
         - /etc/bbb-fsesl-akka/application.conf
-
+        - /usr/share/bbb-web/WEB-INF/classes/application.conf
+    - name: reduce logging usr/share/bbb-web/WEB-INF/classes/application.conf (1)
+      lineinfile:
+        path: '{{ item }}'
+        line: '\1autoreceive = off'
+        regexp: '^((\s+)?)autoreceive = '
+        backrefs: yes
+      loop:
+        - /usr/share/bbb-web/WEB-INF/classes/application.conf
+    - name: reduce logging usr/share/bbb-web/WEB-INF/classes/application.conf (2)
+      lineinfile:
+        path: '{{ item }}'
+        line: '\1lifecycle = off'
+        regexp: '^((\s+)?)lifecycle = '
+        backrefs: yes
+      loop:
+        - /usr/share/bbb-web/WEB-INF/classes/application.conf
+    - name: reduce logging kurento-media-server.service
+      lineinfile:
+        path: /usr/lib/systemd/system/kurento-media-server.service
+        line: 'ExecStart=/usr/bin/kurento-media-server --gst-debug-level=3 --gst-debug="3,Kurento*:3,kms*:3,KurentoWebSocketTransport:3"'
+        regexp: '^((\s+)?)ExecStart='
+        backrefs: yes
+    - name: reduce logging /usr/local/bigbluebutton/bbb-webrtc-sfu/config/default.yml
+      lineinfile:
+        path: /usr/local/bigbluebutton/bbb-webrtc-sfu/config/default.yml
+        line: '  level: warn'
+        regexp: '^  level: '
+    - name: reduce logging in /opt/freeswitch/conf/autoload_configs/unimrcp.conf.xml
+      xml:
+        path: /opt/freeswitch/conf/autoload_configs/unimrcp.conf.xml
+        xpath: /configuration/settings/param[@name='log-level']
+        attribute: value
+        value: WARNING
+      tags:
+        - freeswitch
