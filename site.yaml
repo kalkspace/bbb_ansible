@@ -80,6 +80,7 @@
           - /configuration/logger
           - /configuration/root
       loop: '{{ files | product(xpaths) | list }}'
+      
     - name: reduce logging etc/bbb-*-akka|red5 logback.xml (2)
       xml:
         path: '{{ item[0] }}'
@@ -152,4 +153,15 @@
         value: WARNING
       tags:
         - freeswitch
-
+        
+    - name: disable boring sounds
+      xml:
+        path: /opt/freeswitch/etc/freeswitch/autoload_configs/conference.conf.xml
+        xpath: "/configuration/profiles/profile[@name='{{ item[0] }}']/param[@name='{{ item[1] }}']"
+        state: absent
+        backup: true
+      vars:
+        profiles: [default, wideband, ultrawideband, cdquality, video-mcu-stereo, sla] 
+        sounds: [muted-sound, unmuted-sound, alone-sound, moh-sound]
+      loop: "{{profiles | product(sounds) | list}}"
+      tags: sound
