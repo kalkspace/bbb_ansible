@@ -1,4 +1,10 @@
 - hosts: bbb
+  handlers:
+    - name: reload nginx
+      service:
+        name: nginx
+        state: reloaded
+      
   tasks:
     - name: install python dependencies
       package:
@@ -38,6 +44,7 @@
       loop:
         - /configuration/logger
         - /configuration/root
+
     - name: logging etc/nginx/sites-available/bigbluebutton and etc/nginx/nginx.conf
       lineinfile:
         path: '{{ item }}'
@@ -47,6 +54,16 @@
       loop:
         - /etc/nginx/nginx.conf
         - /etc/nginx/sites-available/bigbluebutton
+      notify: reload nginx
+      tags: nginx
+
+    - name: disable version in 404 pages /etc/nginx/nginx.conf
+      copy: 
+        dest: '/etc/nginx/conf.d/disable-server-version.conf'
+        content: 'server_tokens off;'
+      notify: reload nginx
+      tags: nginx
+
     - name: reduce logging etc/bbb-*-akka|red5 logback.xml (1)
       xml:
         path: '{{ item[0] }}'
@@ -135,3 +152,4 @@
         value: WARNING
       tags:
         - freeswitch
+
