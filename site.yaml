@@ -4,7 +4,7 @@
       service:
         name: nginx
         state: reloaded
-      
+
   tasks:
     - name: install python dependencies
       package:
@@ -58,7 +58,7 @@
       tags: nginx
 
     - name: disable version in 404 pages /etc/nginx/nginx.conf
-      copy: 
+      copy:
         dest: '/etc/nginx/conf.d/disable-server-version.conf'
         content: 'server_tokens off;'
       notify: reload nginx
@@ -80,7 +80,7 @@
           - /configuration/logger
           - /configuration/root
       loop: '{{ files | product(xpaths) | list }}'
-      
+
     - name: reduce logging etc/bbb-*-akka|red5 logback.xml (2)
       xml:
         path: '{{ item[0] }}'
@@ -153,7 +153,7 @@
         value: WARNING
       tags:
         - freeswitch
-        
+
     - name: disable boring sounds
       xml:
         path: /opt/freeswitch/etc/freeswitch/autoload_configs/conference.conf.xml
@@ -161,7 +161,60 @@
         state: absent
         backup: true
       vars:
-        profiles: [default, wideband, ultrawideband, cdquality, video-mcu-stereo, sla] 
+        profiles: [default, wideband, ultrawideband, cdquality, video-mcu-stereo, sla]
         sounds: [muted-sound, unmuted-sound, alone-sound, moh-sound]
       loop: "{{profiles | product(sounds) | list}}"
       tags: sound
+
+    - name: change welcome message
+      ini_file:
+        path: /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
+        section: null
+        option: '{{ item.option }}'
+        value: '{{ item.value }}'
+      loop:
+        - option: defaultWelcomeMessage
+          value: >
+            Willkommen!<br><br>Der KalkSpace freut sich, dass du hier bist.
+            Bitte beachte, dass auch hier unser
+            <a href="https://discuss.kalk.space/t/code-of-conduct/262">Code of Conduct</a> gilt.
+            <br><br> Verwende Headset oder Kopfh&ouml;rer, um Hintergrundger&auml;usche zu reduzieren.
+        - option: defaultWelcomeMessageFooter
+          value: >
+            Um an diesem Treffen per Telefon teilzunehmen, w&auml;hle<br>
+            <strong>%%DIALNUM%%</strong>.<br> Gib dann <strong>%%CONFNUM%%</strong> als Konferenz-PIN ein.
+            Mit der 0 kannst du dich (ent-)muten.
+      tags: welcomeMessage
+
+    - name: edit meteor config
+      vars:
+        config_override:
+          public:
+            kurento:
+              cameraProfiles:
+              - id: low
+                name: Low quality
+                default: true
+                bitrate: 50
+              - id: medium
+                name: Medium quality
+                default: false
+                bitrate: 200
+              - id: high
+                name: High quality
+                default: false
+                bitrate: 500
+      block:
+        - name: read config file
+          slurp:
+            path: /usr/share/meteor/bundle/programs/server/assets/app/config/settings.yml
+          register: meteor_config_raw
+        - name: extract config of meteor
+          set_fact:
+            meteor_config: "{{ meteor_config_raw['content'] | b64decode | from_yaml }}"
+        - name: update meteor confi
+          copy:
+            content: '{{ meteor_config | combine(config_override, recursive=true) | to_nice_yaml }}'
+            dest: /usr/share/meteor/bundle/programs/server/assets/app/config/settings.yml
+            backup: yes
+      tags: meteor
