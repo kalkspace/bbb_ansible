@@ -185,3 +185,36 @@
             <strong>%%DIALNUM%%</strong>.<br> Gib dann <strong>%%CONFNUM%%</strong> als Konferenz-PIN ein.
             Mit der 0 kannst du dich (ent-)muten.
       tags: welcomeMessage
+
+    - name: edit meteor config
+      vars:
+        config_override:
+          public:
+            kurento:
+              cameraProfiles:
+              - id: low
+                name: Low quality
+                default: true
+                bitrate: 50
+              - id: medium
+                name: Medium quality
+                default: false
+                bitrate: 200
+              - id: high
+                name: High quality
+                default: false
+                bitrate: 500
+      block:
+        - name: read config file
+          slurp:
+            path: /usr/share/meteor/bundle/programs/server/assets/app/config/settings.yml
+          register: meteor_config_raw
+        - name: extract config of meteor
+          set_fact:
+            meteor_config: "{{ meteor_config_raw['content'] | b64decode | from_yaml }}"
+        - name: update meteor confi
+          copy:
+            content: '{{ meteor_config | combine(config_override, recursive=true) | to_nice_yaml }}'
+            dest: /usr/share/meteor/bundle/programs/server/assets/app/config/settings.yml
+            backup: yes
+      tags: meteor
