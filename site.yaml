@@ -165,3 +165,23 @@
         sounds: [muted-sound, unmuted-sound, alone-sound, moh-sound]
       loop: "{{profiles | product(sounds) | list}}"
       tags: sound
+
+    - name: change welcome message
+      ini_file:
+        path: /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
+        section: null
+        option: '{{ item.option }}'
+        value: '{{ item.value }}'
+      loop:
+        - option: defaultWelcomeMessage
+          value: >
+            Willkommen!<br><br>Der KalkSpace freut sich, dass du hier bist.
+            Bitte beachte, dass auch hier unser
+            <a href="https://discuss.kalk.space/t/code-of-conduct/262">Code of Conduct</a> gilt.
+            <br><br> Verwende Headset oder Kopfhörer, um Hintergrundgeräusche zu reduzieren.
+        - option: defaultWelcomeMessageFooter
+          value: >
+            Um an diesem Treffen per Telefon teilzunehmen, w&auml;hle<br>
+            <strong>%%DIALNUM%%</strong>.<br> Gib dann <strong>%%CONFNUM%%</strong> als Konferenz-PIN ein.
+            Mit der 0 kannst du dich (ent-)muten.
+      tags: welcomeMessage
