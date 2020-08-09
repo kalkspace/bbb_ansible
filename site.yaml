@@ -99,7 +99,7 @@
     - name: reduce logging */application.conf (1)
       lineinfile:
         path: '{{ item }}'
-        line: '\1loglevel = ERROR'
+        line: '\1loglevel = "ERROR"'
         regexp: '^((\s+)?)loglevel = '
         backrefs: yes
       loop:
@@ -110,7 +110,7 @@
     - name: reduce logging */application.conf (2)
       lineinfile:
         path: '{{ item }}'
-        line: '\1stdout-loglevel = ERROR'
+        line: '\1stdout-loglevel = "ERROR"'
         regexp: '^((\s+)?)stdout-loglevel = '
         backrefs: yes
       loop:
@@ -195,7 +195,7 @@
               - id: low
                 name: Low quality
                 default: true
-                bitrate: 50
+                bitrate: 80
               - id: medium
                 name: Medium quality
                 default: false
