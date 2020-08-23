@@ -218,3 +218,16 @@
             dest: /usr/share/meteor/bundle/programs/server/assets/app/config/settings.yml
             backup: yes
       tags: meteor
+
+    - name: add webserver content
+      copy:
+        src: "files/{{item.source}}"
+        dest: "/var/www/bigbluebutton-default/{{item.destination}}"
+      loop:
+        - source: default-presentation.pdf
+          destination: default.pdf
+        - source: landingpage.html
+          destination: index.html
+        - source: Anleitung_BBB_Kalkspace.pdf
+          destination: Anleitung_BBB_Kalkspace.pdf
+      tags: content
