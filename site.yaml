@@ -231,3 +231,9 @@
         - source: Anleitung_BBB_Kalkspace.pdf
           destination: Anleitung_BBB_Kalkspace.pdf
       tags: content
+
+    - name: configure dial-in
+      copy:
+        src: "files/sipgate.xml"
+        dest: "/opt/freeswitch/etc/freeswitch/dialplan/public/sipgate.xml"
+      tags: dial-in
