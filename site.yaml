@@ -31,10 +31,10 @@
         line: '{{item.key}}={{item.value}}'
         regexp: '^(\s+)?{{item.key}}='
       loop:
-        - { key: history, value: 2 }
-        - { key: unrecorded_days, value: 2 }
-        - { key: published_days, value: 2 }
-        - { key: log_history, value: 5 }
+        - { key: history, value: 0 }
+        - { key: unrecorded_days, value: 1 }
+        - { key: published_days, value: 1 }
+        - { key: log_history, value: 1 }
     - name: logging in /usr/share/bbb-web/WEB-INF/classes/logback.xml
       xml:
         path: /usr/share/bbb-web/WEB-INF/classes/logback.xml
