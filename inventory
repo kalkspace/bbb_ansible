@@ -1,2 +1,3 @@
 [bbb]
-bbb.kalk.space ansible_ssh_user=root
+bbb-23.kalk.space ansible_ssh_user=root
+
