@@ -57,12 +57,13 @@
       notify: reload nginx
       tags: nginx
 
-    - name: disable version in 404 pages /etc/nginx/nginx.conf
-      copy:
-        dest: '/etc/nginx/conf.d/disable-server-version.conf'
-        content: 'server_tokens off;'
-      notify: reload nginx
-      tags: nginx
+# bbb-23
+#    - name: disable version in 404 pages /etc/nginx/nginx.conf
+#      copy:
+#        dest: '/etc/nginx/conf.d/disable-server-version.conf'
+#        content: 'server_tokens off;'
+#      notify: reload nginx
+#      tags: nginx
 
     - name: reduce logging etc/bbb-*-akka|red5 logback.xml (1)
       xml:
@@ -72,10 +73,11 @@
         value: ERROR
       vars:
         files:
-          - /etc/bbb-transcode-akka/logback.xml
+# bbb 23
+#          - /etc/bbb-transcode-akka/logback.xml
           - /etc/bbb-apps-akka/logback.xml
           - /etc/bbb-fsesl-akka/logback.xml
-          - /etc/red5/logback.xml
+# bbb 23          - /etc/red5/logback.xml
         xpaths:
           - /configuration/logger
           - /configuration/root
@@ -88,10 +90,10 @@
         state: absent
       vars:
         files:
-          - /etc/bbb-transcode-akka/logback.xml
+# bbb 23          - /etc/bbb-transcode-akka/logback.xml
           - /etc/bbb-apps-akka/logback.xml
           - /etc/bbb-fsesl-akka/logback.xml
-          - /etc/red5/logback.xml
+# bbb 23          - /etc/red5/logback.xml
         xpaths:
           - /configuration/logger/level
           - /configuration/root/level
@@ -103,7 +105,7 @@
         regexp: '^((\s+)?)loglevel = '
         backrefs: yes
       loop:
-        - /etc/bbb-transcode-akka/application.conf
+# bbb 23        - /etc/bbb-transcode-akka/application.conf
         - /etc/bbb-apps-akka/application.conf
         - /etc/bbb-fsesl-akka/application.conf
         - /usr/share/bbb-web/WEB-INF/classes/application.conf
@@ -114,7 +116,7 @@
         regexp: '^((\s+)?)stdout-loglevel = '
         backrefs: yes
       loop:
-        - /etc/bbb-transcode-akka/application.conf
+# bbb 23        - /etc/bbb-transcode-akka/application.conf
         - /etc/bbb-apps-akka/application.conf
         - /etc/bbb-fsesl-akka/application.conf
         - /usr/share/bbb-web/WEB-INF/classes/application.conf
