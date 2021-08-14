@@ -545,9 +545,9 @@
     "app.error.404": "Nicht gefunden",
     "app.error.410": "Die Konferenz ist zu Ende",
     "app.error.500": "Ups, irgendwas ist schiefgelaufen",
-    "app.error.userLoggedOut": "Teilnehmer hat einen ungültigen Session-Token, weil er sich ausgeloggt hat",
-    "app.error.ejectedUser": "Teilnehmer hat einen ungültigen Session-Token, weil er gesperrt wurde",
-    "app.error.userBanned": "Teilnehmer wurde gesperrt",
+    "app.error.userLoggedOut": "Teilnehmende Person hat einen ungültigen Session-Token, weil sie sich ausgeloggt hat",
+    "app.error.ejectedUser": "Teilnehmende Person hat einen ungültigen Session-Token, weil sie gesperrt wurde",
+    "app.error.userBanned": "Teilnehmende Person wurde gesperrt",
     "app.error.leaveLabel": "Erneut einloggen",
     "app.error.fallback.presentation.title": "Es ist ein Fehler aufgetreten",
     "app.error.fallback.presentation.description": "Er wurde protokolliert. Bitte versuchen Sie die Seite neu zu laden.",
@@ -688,7 +688,7 @@
     "app.video.timeoutError": "Der Browser hat nicht rechtzeitig reagiert.",
     "app.video.genericError": "Ein unbekannter Fehler ist mit dem Gerät aufgetreten (Fehler {0})",
     "app.video.mediaFlowTimeout1020": "Verbindung zum Server konnte nicht hergestellt werden (Fehler 1020)",
-    "app.video.suggestWebcamLock": "Sperrung der Teilnehmerwebcams aktivieren?",
+    "app.video.suggestWebcamLock": "Sperrung der Teilnehmendenwebcams aktivieren?",
     "app.video.suggestWebcamLockReason": "(dies wird die Stabilität der Konferenz erhöhen)",
     "app.video.enable": "Aktivieren",
     "app.video.cancel": "Abbrechen",
@@ -788,6 +788,7 @@
     "app.createBreakoutRoom.addParticipantLabel": "+ Teilnehmende hinzufügen",
     "app.createBreakoutRoom.freeJoin": "Den Teilnehmenden erlauben, sich selbst einen Gruppenraum auszusuchen.",
     "app.createBreakoutRoom.leastOneWarnBreakout": "Jedem Gruppenraum muss wenigstens eine Person zugeordnet sein.",
+    "app.createBreakoutRoom.minimumDurationWarnBreakout": "Die Mindestdauer für einen Gruppenraum beträgt {0} Minuten.",
     "app.createBreakoutRoom.modalDesc": "Tipp: Sie können die Teilnehmenden per Drag-and-Drop einem bestimmten Gruppenraum zuweisen.",
     "app.createBreakoutRoom.roomTime": "{0} Minuten",
     "app.createBreakoutRoom.numberOfRoomsError": "Die Raumanzahl ist ungültig.",
@@ -811,7 +812,8 @@
     "app.debugWindow.form.userAgentLabel": "User Agent",
     "app.debugWindow.form.button.copy": "Kopieren",
     "app.debugWindow.form.enableAutoarrangeLayoutLabel": "Automatisches Anordnungslayout aktivieren",
-    "app.debugWindow.form.enableAutoarrangeLayoutDescription": "(es wird deaktiviert, wenn Sie den Webcambereich ziehen oder in der Größe verändern)"
-
+    "app.debugWindow.form.enableAutoarrangeLayoutDescription": "(es wird deaktiviert, wenn Sie den Webcambereich ziehen oder in der Größe verändern)",
+    "app.debugWindow.form.chatLoggerLabel": "Test der Chatprotokollierungsstufen",
+    "app.debugWindow.form.button.apply": "Anwenden"
 }
 

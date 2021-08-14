@@ -788,6 +788,7 @@
     "app.createBreakoutRoom.addParticipantLabel": "+ Teilnehmende hinzufügen",
     "app.createBreakoutRoom.freeJoin": "Den Teilnehmenden erlauben, sich selbst einen Gruppenraum auszusuchen.",
     "app.createBreakoutRoom.leastOneWarnBreakout": "Jedem Gruppenraum muss wenigstens eine Person zugeordnet sein.",
+    "app.createBreakoutRoom.minimumDurationWarnBreakout": "Die Mindestdauer für einen Gruppenraum beträgt {0} Minuten.",
     "app.createBreakoutRoom.modalDesc": "Tipp: Du kannst die Teilnehmenden per Drag-and-Drop einem bestimmten Gruppenraum zuweisen.",
     "app.createBreakoutRoom.roomTime": "{0} Minuten",
     "app.createBreakoutRoom.numberOfRoomsError": "Die Raumanzahl ist ungültig.",
@@ -812,6 +813,6 @@
     "app.debugWindow.form.button.copy": "Kopieren",
     "app.debugWindow.form.enableAutoarrangeLayoutLabel": "Automatisches Anordnungslayout aktivieren",
     "app.debugWindow.form.enableAutoarrangeLayoutDescription": "(es wird deaktiviert, wenn du den Webcambereich ziehst oder in der Größe veränderst)"
-
+    "app.debugWindow.form.chatLoggerLabel": "Test der Chatprotokollierungsstufen",
+    "app.debugWindow.form.button.apply": "Anwenden"
 }
-
