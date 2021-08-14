@@ -147,15 +147,15 @@
         path: /usr/local/bigbluebutton/bbb-webrtc-sfu/config/default.yml
         line: '  level: warn'
         regexp: '^  level: '
-    - name: reduce logging in /opt/freeswitch/conf/autoload_configs/unimrcp.conf.xml
-      xml:
-        path: /opt/freeswitch/conf/autoload_configs/unimrcp.conf.xml
-        xpath: /configuration/settings/param[@name='log-level']
-        attribute: value
-        value: WARNING
-      tags:
-        - freeswitch
-
+    # BBB 2.3 RC1
+    # - name: reduce logging in /opt/freeswitch/conf/autoload_configs/unimrcp.conf.xml
+    #   xml:
+    #     path: /opt/freeswitch/conf/autoload_configs/unimrcp.conf.xml
+    #     xpath: /configuration/settings/param[@name='log-level']
+    #     attribute: value
+    #     value: WARNING
+    #   tags:
+    #     - freeswitch
     - name: disable boring sounds
       xml:
         path: /opt/freeswitch/etc/freeswitch/autoload_configs/conference.conf.xml
@@ -251,3 +251,14 @@
             include proxy_params;
           }
       tags: metrics
+
+    - name: add de-gendered german language file
+      copy:
+        src: "files/de-gg.json"
+        dest: "{{item}}"
+        backup: true
+      loop:
+        - /usr/share/meteor/bundle/programs/web.browser/app/locales/de.json
+        - /usr/share/meteor/bundle/programs/web.browser.legacy/app/locales/de.json
+      tags: language
+
