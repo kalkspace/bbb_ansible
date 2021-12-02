@@ -262,3 +262,25 @@
         - /usr/share/meteor/bundle/programs/web.browser.legacy/app/locales/de.json
       tags: language
 
+    - name: setup background images
+      block:
+        - name: copy images to server
+          copy:
+            src: "files/backgrounds/"
+            dest: "/usr/share/meteor/bundle/programs/web.browser/app/resources/images/virtual-backgrounds/"
+        - name: gather images
+          find: 
+            paths: "/usr/share/meteor/bundle/programs/web.browser/app/resources/images/virtual-backgrounds/"
+            file_type: file
+          register: images
+        - name: create thumbnails on server
+          command:
+            chdir: "/usr/share/meteor/bundle/programs/web.browser/app/resources/images/virtual-backgrounds/"
+            creates: "/usr/share/meteor/bundle/programs/web.browser/app/resources/images/virtual-backgrounds/thumbnails/{{item.path|basename}}"
+            cmd: convert {{item.path|basename}} -resize 50x50^ -gravity Center -extent 50x50 "thumbnails/{{item.path|basename}}"
+          loop: "{{images.files}}"
+          loop_control: 
+            label: "{{item.path|basename}}"
+      tags: backgrounds
+    
+          
