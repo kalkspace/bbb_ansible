@@ -1,4 +1,5 @@
 - hosts: bbb
+
   handlers:
     - name: reload nginx
       service:
@@ -282,5 +283,25 @@
           loop_control: 
             label: "{{item.path|basename}}"
       tags: backgrounds
-    
-          
+
+    - name: disable learning dashboard
+      ini_file:
+        path: /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
+        section: null
+        option: '{{ item.option }}'
+        value: '{{ item.value }}'
+      loop:
+        - option: learningDashboardEnabled
+          value: "false"
+      tags: dashboard
+
+    - name: custom layout as default
+      ini_file:
+        path: /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
+        section: null
+        option: '{{ item.option }}'
+        value: '{{ item.value }}'
+      loop:
+        - option: defaultMeetingLayout
+          value: "CUSTOM_LAYOUT"
+      tags: layout
