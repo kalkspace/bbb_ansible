@@ -255,7 +255,7 @@
 
     - name: add de-gendered DU german language file
       copy:
-        src: "files/de-cool.json"
+        src: "files/de_cool.json"
         dest: "{{item}}"
         backup: true
       loop:
