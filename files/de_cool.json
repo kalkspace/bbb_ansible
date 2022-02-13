@@ -528,7 +528,6 @@
     "app.audioManager.mediaError": "Fehler: Es gab ein Problem bei der Abfrage deiner Mediengeräte",
     "app.audio.joinAudio": "Audio starten",
     "app.audio.leaveAudio": "Audio beenden",
-    "app.audio.changeLeaveAudio": "Ändern/Audio beenden",
     "app.audio.enterSessionLabel": "An Konferenz teilnehmen",
     "app.audio.playSoundLabel": "Testton abspielen",
     "app.audio.backLabel": "Zurück",
@@ -917,8 +916,6 @@
     "playback.player.video.wrapper.aria": "Webcambereich",
     "app.learningDashboard.dashboardTitle": "Lern-Dashboard",
     "app.learningDashboard.user": "Teilnehmende",
-    "app.learningDashboard.shareButton": "Mit anderen teilen",
-    "app.learningDashboard.shareLinkCopied": "Link erfolgreich kopiert!",
     "app.learningDashboard.indicators.meetingStatusEnded": "Beendet",
     "app.learningDashboard.indicators.meetingStatusActive": "Aktiv",
     "app.learningDashboard.indicators.usersOnline": "Aktive Teilnehmende",
@@ -944,5 +941,12 @@
     "app.learningDashboard.pollsTable.anonymousRowName": "Anonym",
     "app.learningDashboard.statusTimelineTable.title": "Zeitverlauf",
     "app.learningDashboard.errors.invalidToken": "Ungültiger Session-Key",
-    "app.learningDashboard.errors.dataUnavailable": "Die Daten sind nicht mehr verfügbar"
+    "app.learningDashboard.errors.dataUnavailable": "Die Daten sind nicht mehr verfügbar",
+    "app.audio.changeAudioDevice": "Audiogerät wechseln",
+    "app.userList.menu.ejectUserCameras.label": "Kameras schließen",
+    "app.video.advancedVideo": "Erweiterte Einstellungen öffnen",
+    "app.video.virtualBackground.background": "Hintergrund",
+    "app.video.virtualBackground.board": "Tafel",
+    "app.video.virtualBackground.coffeeshop": "Café",
+    "app.video.virtualBackground.home": "Zuhause"
 }
