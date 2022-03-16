@@ -956,7 +956,9 @@
     "app.videoDock.webcamPinLabel": "Anheften",
     "app.videoDock.webcamUnpinDesc": "Ausgewählte Webcam lösen",
     "app.videoDock.webcamUnpinLabel": "Lösen",
-    "app.videoDock.webcamUnpinLabelDisabled": "Nur die Moderation können Teilnehmende lösen",
+    "app.videoDock.webcamUnpinLabelDisabled": "Nur die Moderation kann Teilnehmende lösen",
     "playback.player.chat.message.video.name": "Externes Video",
-    "playback.player.webcams.wrapper.aria": "Webcambereich"
+    "playback.player.webcams.wrapper.aria": "Webcambereich",
+    "playback.player.chat.message.externalVideo.name": "Externes Video",
+    "playback.player.video.wrapper.aria": "Webcambereich"
 }
