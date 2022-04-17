@@ -959,6 +959,20 @@
     "app.videoDock.webcamUnpinLabelDisabled": "Nur die Moderation kann Teilnehmende lösen",
     "playback.player.chat.message.video.name": "Externes Video",
     "playback.player.webcams.wrapper.aria": "Webcambereich",
-    "playback.player.chat.message.externalVideo.name": "Externes Video",
-    "playback.player.video.wrapper.aria": "Webcambereich"
+    "app.guest.guestInvalid": "Gastteilnehmer ist ungültig",
+    "app.guest.meetingForciblyEnded": "Du kannst nicht an einer Konferenz teilnehmen, die bereits beendet wurde",
+    "app.media.screenshare.endDueToDataSaving": "Bildschirmübertragung im Datensparmodus gestoppt",
+    "app.presentationUploder.connectionClosedError": "Durch schlechte Verbindung unterbrochen. Bitte versuche es erneut.",
+    "app.video.camCapReached": "Du kannst keine weiteren Kameras freigeben",
+    "playback.player.about.modal.shortcuts.alt": "Alt",
+    "playback.player.about.modal.shortcuts.fullscreen": "Vollbild umschalten",
+    "playback.player.about.modal.shortcuts.play": "Wiedergabe/Pause",
+    "playback.player.about.modal.shortcuts.section": "Seitenbereich wechseln",
+    "playback.player.about.modal.shortcuts.seek.backward": "Rückwärts suchen",
+    "playback.player.about.modal.shortcuts.seek.forward": "Vorwärts suchen",
+    "playback.player.about.modal.shortcuts.shift": "Shift",
+    "playback.player.about.modal.shortcuts.skip.next": "Nächste Folie",
+    "playback.player.about.modal.shortcuts.skip.previous": "Vorherige Folie",
+    "playback.player.about.modal.shortcuts.swap": "Inhalt umschalten",
+    "playback.player.about.modal.shortcuts.title": "Tastenkombinationen"
 }
