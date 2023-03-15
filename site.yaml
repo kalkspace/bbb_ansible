@@ -235,6 +235,13 @@
           destination: Anleitung_BBB_Kalkspace.pdf
       tags: content
 
+    - name: disable greenlight-redirect
+      file:
+        state: absent
+        path: /usr/share/bigbluebutton/nginx/greenlight-redirect.nginx
+      notify: reload nginx
+      tags: content
+
     - name: configure dial-in
       copy:
         src: "files/sipgate.xml"
@@ -270,7 +277,7 @@
             src: "files/backgrounds/"
             dest: "/usr/share/meteor/bundle/programs/web.browser/app/resources/images/virtual-backgrounds/"
         - name: gather images
-          find: 
+          find:
             paths: "/usr/share/meteor/bundle/programs/web.browser/app/resources/images/virtual-backgrounds/"
             file_type: file
           register: images
@@ -280,7 +287,7 @@
             creates: "/usr/share/meteor/bundle/programs/web.browser/app/resources/images/virtual-backgrounds/thumbnails/{{item.path|basename}}"
             cmd: convert {{item.path|basename}} -resize 50x50^ -gravity Center -extent 50x50 "thumbnails/{{item.path|basename}}"
           loop: "{{images.files}}"
-          loop_control: 
+          loop_control:
             label: "{{item.path|basename}}"
       tags: backgrounds
 
